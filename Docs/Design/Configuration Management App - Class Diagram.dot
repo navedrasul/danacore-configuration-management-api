@@ -1,0 +1,26 @@
+digraph ConfigurationManagementApp {
+    node [shape=record];
+
+    // User Role Management
+    Role [label="{Role|+ id: Long\l+ name: String\l+ permissions: List<Permission>\l}"];
+    Permission [label="{Permission|+ id: Long\l+ name: String\l+ description: String\l}"];
+    User [label="{User|+ id: Long\l+ username: String\l+ roles: List<Role>\l}"];
+
+    // Workflow Configuration
+    Workflow [label="{Workflow|+ id: Long\l+ name: String\l+ triggers: List<Trigger>\l+ actions: List<Action>\l}"];
+    Trigger [label="{Trigger|+ id: Long\l+ type: String\l+ condition: String\l}"];
+    Action [label="{Action|+ id: Long\l+ type: String\l+ parameters: Map<String, String>\l}"];
+
+    // System Settings Management
+    SystemSetting [label="{SystemSetting|+ id: Long\l+ key: String\l+ value: String\l}"];
+
+    // Audit Logging
+    AuditLog [label="{AuditLog|+ id: Long\l+ timestamp: Date\l+ user: User\l+ action: String\l+ details: String\l}"];
+
+    // Relationships
+    Role -> Permission [label="has"];
+    User -> Role [label="assigned"];
+    Workflow -> Trigger [label="has"];
+    Workflow -> Action [label="has"];
+    AuditLog -> User [label="performed by"];
+}

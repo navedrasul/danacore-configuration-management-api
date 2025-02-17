@@ -1,0 +1,17 @@
+digraph TestWorkflow {
+    rankdir=LR;
+    node [shape=record, fontname=Arial];
+
+    User -> Frontend [label="1. Sends HTTP POST /workflows/{id}/test request"];
+    Frontend -> APIGateway [label="2. Forwards request via API Gateway"];
+    APIGateway -> AuthService [label="3. Validates JWT Token"];
+    AuthService -> APIGateway [label="4. Returns authentication status"];
+    APIGateway -> Backend [label="5. Routes authenticated request to Backend"];
+    Backend -> ServiceLayer [label="6. Processes business logic for testing workflow"];
+    ServiceLayer -> RepositoryLayer [label="7. Executes test logic"];
+    RepositoryLayer -> ServiceLayer [label="8. Returns test results"];
+    ServiceLayer -> Backend [label="9. Returns response"];
+    Backend -> APIGateway [label="10. Forwards response"];
+    APIGateway -> Frontend [label="11. Sends response to client"];
+    Frontend -> User [label="12. Displays test results"];
+}

@@ -1,0 +1,13 @@
+digraph SequenceDiagram {
+    rankdir=LR;
+    node [shape=record, fontname=Arial];
+
+    User -> Frontend [label="1. Sends HTTP GET /health-check request"];
+    Frontend -> APIGateway [label="2. Forwards request via API Gateway"];
+    APIGateway -> Backend [label="3. Routes request to Backend"];
+    Backend -> HealthService [label="4. Performs health check"];
+    HealthService -> Backend [label="5. Returns health status"];
+    Backend -> APIGateway [label="6. Forwards response"];
+    APIGateway -> Frontend [label="7. Sends response to client"];
+    Frontend -> User [label="8. Displays health status"];
+}

@@ -1,0 +1,89 @@
+digraph ConfigurationManagementApp {
+    rankdir=TB;
+    node [shape=component, style=rounded];
+
+    subgraph cluster_DanaCore {
+        label="DanaCore";
+        style = filled;
+        color = lightblue;
+
+        subgraph cluster_ConfigurationManagementApp {
+            label = "Configuration Management App";
+            style = filled;
+            color = lightgrey;
+
+            frontend [label="Frontend (React)"];
+            backend [label="Backend (Spring Boot)"];
+
+            auth_service [label="Authentication Service"];
+
+            system_settings_service [label="System Settings Service"];
+            audit_log_service [label="Audit Logging Service"];
+            workflow_service [label="Workflow Management Service"];
+            metadata_support_service [label="Metadata and Support Service"];
+
+            system_settings_db [label="System Settings Database (PostgreSQL)"];
+            audit_log_db [label="Audit Logging Database (PostgreSQL)"];
+            workflow_db [label="Workflow Database (PostgreSQL)"];
+            metadata_support_db [label="Metadata and Support Database (PostgreSQL)"];
+
+            frontend -> backend [label="API Requests"];
+            backend -> frontend [label="REST API Responses"];
+
+            backend -> auth_service [label="JWT Validation Requests"];
+            auth_service -> backend [label="JWT Validation Responses"];
+
+            backend -> audit_log_service [label="Audit Logging Requests"];
+            audit_log_service -> backend [label="Audit Logging Responses"];
+            audit_log_service -> audit_log_db [label="CRUD Operations Requests"];
+            audit_log_db -> audit_log_service [label="CRUD Operations Responses"];
+
+            backend -> workflow_service [label="Workflow Execution Requests"];
+            workflow_service -> backend [label="Workflow Execution Responses"];
+            workflow_service -> workflow_db [label="CRUD Operations Requests"];
+            workflow_db -> workflow_service [label="CRUD Operations Responses"];
+
+            backend -> system_settings_service [label="System Settings API Requests"];
+            system_settings_service -> backend [label="System Settings API Responses"];
+            system_settings_service -> system_settings_db [label="CRUD Operations Requests"];
+            system_settings_db -> system_settings_service [label="CRUD Operations Responses"];
+
+            backend -> metadata_support_service [label="Metadata and Support API Requests"];
+            metadata_support_service -> backend [label="Metadata and Support API Responses"];
+            metadata_support_service -> metadata_support_db [label="CRUD Operations Requests"];
+            metadata_support_db -> metadata_support_service [label="CRUD Operations Responses"];
+        }
+
+        // Interactions with other apps in DanaCore ERP System
+        backend -> record_mgmt_app [label="Record Management Requests"];
+        record_mgmt_app -> backend [label="Record Management Responses"];
+        backend -> monitoring_alerts_app [label="Monitoring & Alerts Requests"];
+        monitoring_alerts_app -> backend [label="Monitoring & Alerts Responses"];
+        backend -> user_access_mgmt_app [label="User Access Management Requests"];
+        user_access_mgmt_app -> backend [label="User Access Management Responses"];
+        backend -> reporting_app [label="Reporting Requests"];
+        reporting_app -> backend [label="Reporting Responses"];
+        backend -> predictive_analytics_app [label="Predictive Analytics Requests"];
+        predictive_analytics_app -> backend [label="Predictive Analytics Responses"];
+        backend -> bi_app [label="Business Intelligence Requests"];
+        bi_app -> backend [label="Business Intelligence Responses"];
+        backend -> payment_gateway_integration_app [label="Payment Gateway Integration Requests"];
+        payment_gateway_integration_app -> backend [label="Payment Gateway Integration Responses"];
+        backend -> crm_integration_app [label="CRM Integration Requests"];
+        crm_integration_app -> backend [label="CRM Integration Responses"];
+        backend -> api_mgmt_app [label="API Management Requests"];
+        api_mgmt_app -> backend [label="API Management Responses"];
+        backend -> email_sms_app [label="Email & SMS Requests"];
+        email_sms_app -> backend [label="Email & SMS Responses"];
+        backend -> task_notification_app [label="Task Notification Requests"];
+        task_notification_app -> backend [label="Task Notification Responses"];
+        backend -> collaboration_app [label="Collaboration Requests"];
+        collaboration_app -> backend [label="Collaboration Responses"];
+        backend -> job_scheduler_app [label="Job Scheduler Requests"];
+        job_scheduler_app -> backend [label="Job Scheduler Responses"];
+        backend -> event_processing_app [label="Event Processing Requests"];
+        event_processing_app -> backend [label="Event Processing Responses"];
+        backend -> audit_trail_app [label="Audit Trail Requests"];
+        audit_trail_app -> backend [label="Audit Trail Responses"];
+    }
+}
